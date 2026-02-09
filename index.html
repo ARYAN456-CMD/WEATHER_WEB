@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Wscube Weather App</title>
+    <style>
+        body {
+            background-color: lightblue;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 40px;
+        }
+        .container {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            max-width: 500px;
+            margin: auto;
+        }
+        select, button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            font-size: 16px;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Wscube Weather App</h1>
+        <form method="post">
+            <select name="city" required>
+                <option value="">-- Select City --</option>
+                {% for state in states %}
+                <option value="{{ state }}" {% if data.city == state %}selected{% endif %}>{{ state }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit">Get Weather</button>
+        </form>
+
+        {% if data.weather %}
+        <div class="result">
+            <p><strong>Weather:</strong> {{ data.weather }}</p>
+            <p><strong>Description:</strong> {{ data.description }}</p>
+            <p><strong>Temperature:</strong> {{ data.temperature }}</p>
+            <p><strong>Pressure:</strong> {{ data.pressure }}</p>
+        </div>
+        {% elif data.error %}
+        <div class="result" style="color:red;">
+            <p>{{ data.error }}</p>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
